@@ -1,8 +1,10 @@
-4e5472c433b4f75e46008e238bb261a3 *DESCRIPTION
+af32d361a22e98681d3193a7ab3a353e *DESCRIPTION
 fb2705d949ec8724728aae757e087de2 *LICENSE
-64d0dd179765d5d1408a3450e0e60866 *NAMESPACE
-d843e6562d552a4fef18e7659d1d61d8 *R/ethnicites.R
-b7d7934c8782f16091feab537f509744 *R/nationalities.r
-0717553beb567fe07b1bd517c6dd528b *README.md
-4d588da5934a52c7c2ef97d2a65db3eb *man/get_ethnicities.Rd
-abb17482ebf0a858d91679f78652ff51 *man/get_nationalities.Rd
+29852e8eb05536b9f421e3023b9c33b3 *NAMESPACE
+026dd18cee0ab894db3de7ea629c882d *R/ethnicites.R
+1e7b58f6730ec15f60d516abf9554737 *R/gender.r
+f178dd3c86a2ae7f1eafbd2607ef594d *R/nationalities.r
+ffba1598fd5b25288cfcf797a8dd1925 *README.md
+d0986b2fc016ed91e3eb78c52462174b *man/get_ethnicities.Rd
+87fff17286ad369502f783e407eddd9c *man/get_gender.Rd
+69706bd2f35e186a2eed9ef46d36011d *man/get_nationalities.Rd
