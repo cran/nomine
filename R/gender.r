@@ -4,37 +4,37 @@
 #'@author Charles Crabtree \email{ccrabtr@umich.edu}
 #'@param given A vector of given names (i.e. first names).
 #'@param family A vector of family names (i.e. surnames or last names).
-#'@param secret A NameSor API Key (Secret). This is typically a long string of mixed-case letters and numbers.
-#'@param user A NameSor API Channel (User). This string contains 'namsor.com', the email address used to register for API access, and a vector of numbers.
+#'@param api_key A NameSor API Key. This is typically a long string of mixed-case letters and numbers. Get yours at \url{https://namsor.app/}
 #'@return An object that classifies inputted names according to gender.
 #'@examples
-#' \dontrun{
+#' # Prepare input vectors
 #' first_name <- c("Volha", "Charles", "Donald")
 #' last_name <- c("Chykina", "Crabtree", "Duck")
 #'
-#' Note that the vectors of first and last names should be the same length.
-#' Future versions of the package will deal with differing lengths.
+#' # Expected output columns
+#' expected_cols <- c("id", "first_name", "last_name", "api_url", "scale", "gender")
+#' print(expected_cols)
 #'
-#' key <- "45b2kjsskd2335435kkmfdksmfkko"
-#' channel <- "namsor.com/email@domain.com/111111"
-#' y <- get_gender(first_name, last_name, key, channel)
+#' \dontrun{
+#' # Note: the vectors of first and last names should be the same length.
+#' key <- "YOUR_NAMSOR_API_KEY"
+#' y <- get_gender(first_name, last_name, key)
 #' y
 #' }
 #'@importFrom utils setTxtProgressBar txtProgressBar
 #'@export
 
-get_gender <- function(given, family, secret, user) {
+get_gender <- function(given, family, api_key) {
   pb <- txtProgressBar(min = 0, max = length(given), style = 3)
   gender <- data.frame(matrix(NA, nrow = length(given), ncol = 6))
   colnames(gender) <- c("id", "first_name", "last_name", "api_url",
                         "scale", "gender")
   for(i in 1:length(given)) {
-    address <- paste0("https://api.namsor.com/onomastics/api/json/gender/",
+    address <- paste0("https://v2.namsor.com/NamSorAPIv2/api2/json/gender/",
                       given[i], "/", family[i])
-    r <- httr::GET(address, query = list(key1 = secret,
-                                         key2 = user))
+    r <- httr::GET(address, httr::add_headers(`X-API-KEY` = api_key))
     r <- httr::content(r, "parse")
-    gender[i, ] <- c(i, given[i], family[i], address, r$scale, r$gender)
+    gender[i, ] <- c(i, given[i], family[i], address, r$genderScale, r$likelyGender)
     setTxtProgressBar(pb, i)
   }
   return(gender)

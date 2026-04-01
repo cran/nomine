@@ -4,22 +4,38 @@
 \alias{get_nationalities}
 \title{Classifies names based on 39 leaf nationalities}
 \usage{
-get_nationalities(x)
+get_nationalities(x, t = NULL, warnings = FALSE)
 }
 \arguments{
-\item{x}{A vector of names.}
+\item{x}{A vector of names,  in the form "First_name Last_name". If there are multiple segments separated by white spaces, only the first and the last segments are taken into account.}
+
+\item{t}{A string with the API access token. The default value is NULL, although you must set your own token. A Name-Prism API token can be obtained for research purposes to overcome the limit of anonymous API use. Please visit \url{https://www.name-prism.com/api} for more details.}
+
+\item{warnings}{Logical. If TRUE, then a warning message will be displayed when a name cannot be analyzed. The default value is FALSE.}
 }
 \value{
-An object that classifies inputted names according inputted name belongs to 39 different leaf nationalities.
+A data frame of dimensions length(x)*42, with the probability of belonging to each of the 39 different leaf CEL groups of the Name-Prism taxonomy (see \url{https://www.name-prism.com/about}). Errors (e.g. connection is interrupted, invalid tokens) are handled as NA.
 }
 \description{
 Returns an object that classifies inputted names according to 39 different leaf nationalities.
 }
 \examples{
-x <- c("Charles Crabtree", "Volha Chykina")
-y <- get_nationalities(x)
+# Prepare input vector of names
+x <- c("Charles Crabtree", "Volha Chykina", "Christian Chacua",
+       "Christian Mauricio Chacua")
+
+# Expected output columns (3 metadata + 39 leaf nationalities)
+n_output_cols <- 42L
+print(n_output_cols)
+
+\dontrun{
+# Using the API token (you should get your own token)
+y <- get_nationalities(x, t = "YOUR_NAMEPRISM_TOKEN", warnings = FALSE)
 y
+# "Christian Chacua" and "Christian Mauricio Chacua" have the same
+# probabilities as "Mauricio" is not taken into account.
+}
 }
 \author{
-Charles Crabtree \email{ccrabtr@umich.edu}
+Charles Crabtree \email{ccrabtr@umich.edu} and Christian Chacua \email{christian-mauricio.chacua-delgado@u-bordeaux.fr}
 }
